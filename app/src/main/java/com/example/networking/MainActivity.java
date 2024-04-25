@@ -16,7 +16,9 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
 
     private final String JSON_URL = "HTTPS_URL_TO_JSON_DATA_CHANGE_THIS_URL";
     private final String JSON_FILE = "mountains.json";
-    private ArrayList<Mountain> mountainArrayList;
+    private ArrayList<Mountain> parseJson(String json) {
+        return null;
+    }
     private RecyclerView.Adapter<RecyclerView.ViewHolder> recyclerAdapter;
 
     @Override
@@ -42,6 +44,26 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
             new JsonFile(this, this).execute(JSON_FILE);
 
     }
+
+    private void getJson(){
+        new JsonTask(new JsonTask.JsonTaskListener() {
+            @Override
+            public void onPostExecute(String json) {
+                try {
+                    ArrayList<Mountain> mountainArrayList = parseJson(json);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+
+
+
+
+    }
+
+
+
 
     @Override
     public void onPostExecute(String json) {
