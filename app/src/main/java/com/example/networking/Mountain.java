@@ -20,4 +20,9 @@ public class Mountain {
         this.wiki = wiki;
         this.imgUrl = imgUrl;
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

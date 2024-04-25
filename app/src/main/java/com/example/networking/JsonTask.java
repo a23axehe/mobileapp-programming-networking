@@ -27,7 +27,7 @@ public class JsonTask extends AsyncTask<String, String, String> {
 
     protected String doInBackground(String... params) {
         try {
-            URL url = new URL(params[0]);
+            URL url = new URL("https://wwwlab.iit.his.se/brom/kurser/mobilprog/dbservice/admin/getdataasjson.php?login=brom");
             connection = (HttpURLConnection) url.openConnection();
             connection.connect();
 
