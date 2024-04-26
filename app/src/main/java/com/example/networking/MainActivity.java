@@ -4,7 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.content.Context;
+
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -13,28 +13,17 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+
 
 @SuppressWarnings("FieldCanBeLocal")
 public class MainActivity extends AppCompatActivity implements JsonTask.JsonTaskListener {
     private MyAdapter adapter;
-    //private final String JSON_URL = "mountains.json";
     private final String JSON_FILE = "mountains.json";
-    //ArrayList<RecyclerViewItem> mountains = new ArrayList<>();
-
-
     private final ArrayList<Mountain> mountains = new ArrayList<>();
-    ArrayList<RecyclerViewItem> items = new ArrayList<>(Arrays.asList(
-            new RecyclerViewItem("Matterhorn"),
-            new RecyclerViewItem("Mont Blanc"),
-            new RecyclerViewItem("Denali")
-    ));
-
 
     private void getJson() {
         new JsonFile(this, this).execute(JSON_FILE);
     }
-
     public ArrayList<Mountain> parseJson(String json) {
 
         try {
@@ -82,8 +71,8 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
 
     @Override
     public void onPostExecute(String json) {
-        mountains.clear(); // Rensa befintliga data innan du lägger till nya
-        mountains.addAll(parseJson(json)); // Lägg till de parsade bergen i listan
+        mountains.clear();
+        mountains.addAll(parseJson(json));
         adapter.notifyDataSetChanged();
     }
 }

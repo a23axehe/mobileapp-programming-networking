@@ -2,9 +2,47 @@
 # Rapport
 
 **Skriv din rapport här!**
+Syftet med uppgiften var att skapa en recyclerview som skulle redovisa ett antal berg. Det första som gjordes var att 
+byta ut textview elementet i activity_main.xml mot ett recyclerview element. Efter ändringen i activity_main.xml
+gjorts skapades Mountain klassen som används för att tolka json datan. Arrayen mountains skapades även i filen MainActivity.java
+genom koden:
+private final ArrayList<Mountain> mountains = new ArrayList<>();
+Efter att arrayen skapats uppstod lite problem med att skapa en adapter. För mycket olik kod inspirerad från internet
+ledde till att adaptern inte fungerade och var väldigt svår att förstå. Detta problem löstes genom att följa instruktionerna på denna länk:
+https://dugga.iit.his.se/DuggaSys/showdoc.php?exampleid=it351g_widgets_recyclerview.md&courseid=1&coursevers=928742&fname=it351g_widgets_recyclerview.md
+Efter att ha gjort om i filerna samt gjort om hela MyAdapter filen blev det lättare att förstå vad som skulle göras härnäst.
+Pågrund av datorns brandvägg gick det tyvärr ej att nå JSON_URL vilket löstes genom att hänvisa till JSON_FILE istället genom koden:
+private final String JSON_FILE = "mountains.json";
+Denna fil kunde sedan laddas ner genom flöjande kod:
+private void getJson() {
+    new JsonFile(this, this).execute(JSON_FILE);
+}
+Genom följande kod kunde sedan datan från JSON filen sparas till variabler som sedan användas för att skapa en ny instans av mountain klassen
+och lägga till den i arrayen mountains som tidigare skapats:
+for (int i = 0; i < jsonArray.length(); i++) {
+    JSONObject jsonObject = jsonArray.getJSONObject(i);
+    String id = jsonObject.getString("ID");
+    String name = jsonObject.getString("name");
+    String type = jsonObject.getString("type");
+    String location = jsonObject.getString("location");
+    int size = jsonObject.getInt("size");
+    int cost = jsonObject.getInt("cost");
+    JSONObject auxData = jsonObject.getJSONObject("auxdata");
+    String wiki = auxData.getString("wiki");
+    String imgUrl = auxData.optString("img", "");
+    Mountain mountain = new Mountain(id, name, type, location, size, cost, wiki, imgUrl);
+    mountains.add(mountain);
+}
+Genom denna kod tilldelas adaptern en layout fil och mountains arrayen som är kopplad till andra änden av adaptern
+visas upp på skärmen:
+RecyclerView view = findViewById(R.id.recyclerview1);
+view.setLayoutManager(new LinearLayoutManager(this));
+view.setAdapter(adapter);
+getJson();
 
-_Du kan ta bort all text som finns sedan tidigare_.
 
+Nedan är en skärmbild på hur appen ser ut:
+![img.png](img.png)
 ## Följande grundsyn gäller dugga-svar:
 
 - Ett kortfattat svar är att föredra. Svar som är längre än en sida text (skärmdumpar och programkod exkluderat) är onödigt långt.
